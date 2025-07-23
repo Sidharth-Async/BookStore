@@ -5,18 +5,21 @@ import com.example.bookstore.dto.book.BookResponse;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Category;
+import com.example.bookstore.exceptions.BookNotFoundException;
 import com.example.bookstore.repositories.AuthorRepo;
 import com.example.bookstore.repositories.BookRepo;
 import com.example.bookstore.repositories.CategoryRepo;
+import com.example.bookstore.service.book.BookService;
 
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
-public class BookServiceImpl {
+public class BookServiceImpl implements BookService {
 
     private final BookRepo bookRepo;
     private final CategoryRepo categoryRepo;
@@ -37,7 +40,7 @@ public class BookServiceImpl {
             throw new IllegalArgumentException("Book title cannot be empty");
         }
         if (request.getPrice() <= 0 ) {
-            throw new IllegalArgumentException("Price must be greather than zero");
+            throw new IllegalArgumentException("Price must be greater than zero");
         }
         if (request.getPrice() < 0 ) {
             throw new IllegalArgumentException("Price cannot be negative");
@@ -95,4 +98,12 @@ public class BookServiceImpl {
         return response;
     }
 
+    public BookResponse getBookById(Long bookId){
+
+        // fetch book from DB
+        Book book = bookRepo.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException("Book with id " + bookId + " not found"));
+        return mapToResponse(book);
+
+    }
 }
