@@ -7,8 +7,6 @@ public class UserResponse {
     private Long id;
     private String name;
     private String email;
-    private String role;
-    private List<String> books;
 
     public Long getId() {
         return id;
@@ -34,19 +32,5 @@ public class UserResponse {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public List<String> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<String> books) {
-        this.books = books;
-    }
 }
