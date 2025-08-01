@@ -2,6 +2,7 @@ package com.example.bookstore.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -40,4 +41,6 @@ public class Category {
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
+
+
 }

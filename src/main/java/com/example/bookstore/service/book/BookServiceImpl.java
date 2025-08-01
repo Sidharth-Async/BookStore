@@ -63,8 +63,8 @@ public class BookServiceImpl implements BookService {
         book.setTitle(request.getTitle());
         book.setPrice(request.getPrice());
         book.setStock(request.getStock());
-        book.setCategories(new HashSet<>(categories));
-        book.setAuthor(new HashSet<>(authors));
+        book.setCategory();
+        book.setAuthors(new HashSet<>(authors));
 
         //save to database
         Book savedBook = bookRepo.save(book);
@@ -81,16 +81,14 @@ public class BookServiceImpl implements BookService {
         response.setStock(book.getStock());
 
         // extract category names
-        List<String> categoryNames = book.getCategories()
+        List<String> categoryNames = book.getCategory()
                 .stream()
                 .map(Category::getName)
                 .toList();
 
         // extract author names
-        List<String> authorNames = book.getAuthor()
-                .stream()
-                .map(Author::getName)
-                .toList();
+        List<String> authorNames = (List<String>) book.getAuthors()
+                .stream();
 
         response.setCategories(categoryNames);
         response.setAuthors(authorNames);

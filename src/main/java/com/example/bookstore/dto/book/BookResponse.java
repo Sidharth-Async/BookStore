@@ -1,21 +1,23 @@
 package com.example.bookstore.dto.book;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 import java.util.List;
 
 public class BookResponse {
 
-    private Long id;
+    private Integer id;
     private String title;
     private double price;
     private int stock;
     private List<String> categories;
     private List<String> authors;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ public class BookRequest {
     private String title;
     private double price;
     private int stock;
-    private Set<Long> categoryIds;
+    private Long categoryIds;
     private Set<Long> authorIds;
 
     public String getTitle() {
@@ -35,11 +35,11 @@ public class BookRequest {
         this.stock = stock;
     }
 
-    public Set<Long> getCategoryIds() {
+    public Long getCategoryIds() {
         return categoryIds;
     }
 
-    public void setCategoryIds(Set<Long> categoryIds) {
+    public void setCategoryIds(Long categoryIds) {
         this.categoryIds = categoryIds;
     }
 

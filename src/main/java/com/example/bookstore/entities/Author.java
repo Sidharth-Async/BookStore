@@ -29,8 +29,9 @@ public class Author {
         return name;
     }
 
-    public void setName(String name) {
+    public List<String> setName() {
         this.name = name;
+        return null;
     }
 
     public List<Book> getBooks() {

@@ -6,45 +6,30 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "library_books")
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @Column(nullable = false)
-    private Long id;
-
-    @Column(nullable = false)
     private String title;
+    private Double price;
+    private Integer stock;
 
     @ManyToOne
-    private Set<Author> author = new HashSet<>();
-
-    @ManyToMany(mappedBy = "books")
-    private Set<User> users = new HashSet<>();
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToMany
     @JoinTable(
-            name = "book_categories",
+            name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+            inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private Set<Category> categories = new HashSet<>();
+    private Set<Author> authors = new HashSet<>();
 
 
-    @Column(nullable = false)
-    private double price;
-
-    @Column(nullable = false)
-    private int stock;
-
-    public Long getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -55,41 +40,35 @@ public class Book {
         this.title = title;
     }
 
-    public Set<Author> getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(HashSet<Author> authors) {}
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory() {
+        this.category = category;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 }
