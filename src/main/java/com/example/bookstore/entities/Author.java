@@ -1,5 +1,7 @@
 package com.example.bookstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,7 +16,8 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "author" , cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authors" , cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Book> books;
 
     public Long getId() {

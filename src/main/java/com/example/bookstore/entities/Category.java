@@ -2,6 +2,7 @@ package com.example.bookstore.entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
-    private Set<Book> books;
+    private List<Book> books;
 
     public int getId() {
         return id;
@@ -34,11 +35,11 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

@@ -1,8 +1,10 @@
 package com.example.bookstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,9 +17,13 @@ public class Book {
     private Double price;
     private Integer stock;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "book_category",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
     @ManyToMany
     @JoinTable(
@@ -25,6 +31,7 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+    @JsonManagedReference
     private Set<Author> authors = new HashSet<>();
 
 
@@ -56,12 +63,12 @@ public class Book {
         this.stock = stock;
     }
 
-    public Category getCategory() {
-        return category;
+    public List <Category> getCategory() {
+        return categories;
     }
 
     public void setCategory() {
-        this.category = category;
+        this.categories = categories;
     }
 
     public Set<Author> getAuthors() {

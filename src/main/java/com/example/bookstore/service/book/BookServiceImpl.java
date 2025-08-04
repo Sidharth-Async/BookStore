@@ -47,7 +47,7 @@ public class BookServiceImpl implements BookService {
         }
 
         //fetch related category
-        var categories = categoryRepo.findAllById(request.getCategoryIds());
+        var categories = categoryRepo.findById(request.getCategoryIds());
         if (categories.isEmpty()) {
             throw new RuntimeException("No valid categories found for the given IDs");
         }
