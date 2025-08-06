@@ -1,9 +1,7 @@
 package com.example.bookstore.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -16,10 +14,11 @@ public class Author {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "authors" , cascade = CascadeType.ALL)
-    @JsonIgnore
+    @ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+    @JsonIgnore  // Prevents circular reference (if Book has authors)
     private List<Book> books;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -32,9 +31,8 @@ public class Author {
         return name;
     }
 
-    public List<String> setName() {
+    public void setName(String name) {
         this.name = name;
-        return null;
     }
 
     public List<Book> getBooks() {

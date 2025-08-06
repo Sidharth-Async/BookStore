@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,17 +10,16 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    private Long id;  // Changed from int to Long
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)  // Added unique
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)  // Added unique
     private String email;
 
     @Column(nullable = false)
-    private char[] password;
+    private char[] password;  // Should be hashed in practice
 
     @Column(nullable = false)
     private String role;
@@ -31,22 +30,24 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
+    @JsonIgnore  // Prevents circular reference (if Book has users)
     private Set<Book> books = new HashSet<>();
 
-    public int getId() {
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setName(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

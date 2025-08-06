@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
         //Create new User entity
         User user = new User();
-        user.setName(request.getName());
+        user.setUsername(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(hashedPassword.toCharArray());
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     private UserResponse mapToResponse(User user){
         UserResponse response = new UserResponse();
         response.setId((long) user.getId());
-        response.setName(user.getName());
+        response.setName(user.getUsername());
         response.setEmail(user.getEmail());
         return response;
     }
