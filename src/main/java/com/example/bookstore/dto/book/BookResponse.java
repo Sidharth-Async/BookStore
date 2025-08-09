@@ -6,18 +6,18 @@ import java.util.List;
 
 public class BookResponse {
 
-    private Integer id;
+    private Long id;
     private String title;
     private double price;
     private int stock;
     private List<String> categories;
     private List<String> authors;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

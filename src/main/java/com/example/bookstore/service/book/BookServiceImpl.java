@@ -32,17 +32,19 @@ public class BookServiceImpl implements BookService {
         this.categoryRepo = categoryRepo;
         this.authorRepo = authorRepo;
     }
+
+
     @Override
     public BookResponse createBook(BookRequest request) {
 
         //basic validation
-        if (request.getTitle() == null || request.getTitle().trim().isEmpty()){
+        if (request.getTitle() == null || request.getTitle().trim().isEmpty()) {
             throw new IllegalArgumentException("Book title cannot be empty");
         }
-        if (request.getPrice() <= 0 ) {
+        if (request.getPrice() <= 0) {
             throw new IllegalArgumentException("Price must be greater than zero");
         }
-        if (request.getPrice() < 0 ) {
+        if (request.getPrice() < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
         }
 
@@ -55,7 +57,7 @@ public class BookServiceImpl implements BookService {
         //fetch related authors
         var authors = authorRepo.findAllById(request.getAuthorIds());
         if (authors.isEmpty()) {
-            throw  new RuntimeException("No valid authors found for the given IDs");
+            throw new RuntimeException("No valid authors found for the given IDs");
         }
 
         //create a new book entity
@@ -73,7 +75,7 @@ public class BookServiceImpl implements BookService {
         return mapToResponse(savedBook);
     }
 
-    private BookResponse mapToResponse(Book book){
+    private BookResponse mapToResponse(Book book) {
         BookResponse response = new BookResponse();
         response.setId(book.getId());
         response.setTitle(book.getTitle());
@@ -96,12 +98,31 @@ public class BookServiceImpl implements BookService {
         return response;
     }
 
-    public BookResponse getBookById(Long bookId){
+    public BookResponse getBookById(Long bookId) {
 
         // fetch book from DB
         Book book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException("Book with id " + bookId + " not found"));
         return mapToResponse(book);
 
+    }
+
+    public Book updateBook(Long id, Book bookDetails) {
+        Book book = bookRepo.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
+
+
+        book.setTitle(bookDetails.getTitle());
+        book.setAuthors(bookDetails.getAuthors());
+        book.setPrice(bookDetails.getPrice());
+        book.setStock(bookDetails.getStock());
+
+        return bookRepo.save(book);
+    }
+    public void deleteBook(Long id) {
+        Book book = bookRepo.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("Book not found with id: " + id));
+
+        bookRepo.delete(book);
     }
 }

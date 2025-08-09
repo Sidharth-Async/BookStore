@@ -22,11 +22,13 @@ public class UserController {
         return userRepo.findAll();
     }
 
+    // Method to save and create users
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userRepo.save(user);
         return ResponseEntity.ok(savedUser);
     }
+
 
 
     // Get user by ID
